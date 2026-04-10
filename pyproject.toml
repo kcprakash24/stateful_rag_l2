@@ -1,0 +1,20 @@
+[project]
+name = "stateful-rag-l2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=1.5.7",
+    "ipykernel>=7.2.0",
+    "langchain>=1.2.15",
+    "langchain-chroma>=1.1.0",
+    "langchain-community>=0.4.1",
+    "langchain-ollama>=1.1.0",
+    "langchain-openai>=1.1.12",
+    "langfuse>=4.2.0",
+    "pydantic-settings>=2.13.1",
+    "pymupdf4llm>=1.27.2.2",
+    "python-dotenv>=1.2.2",
+    "streamlit>=1.56.0",
+]
