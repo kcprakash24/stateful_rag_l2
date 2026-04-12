@@ -56,6 +56,17 @@ def add_chunks(chunks: list[DocumentChunk], embeddings: list[list[float]]) -> in
 
     return inserted
 
+# <=> operator in pgvector
+# ---------------------------
+# <=> is the cosine distance operator in pgvector. 1 - (embedding <=> query) converts distance to similarity — higher is better. Other operators:
+
+# <-> — L2 (Euclidean) distance (what ChromaDB used by default)
+# <#> — negative inner product
+# <=> — cosine distance ← we use this, best for text embeddings
+
+# ON CONFLICT (chunk_id) DO NOTHING
+# ------------------------------------
+# This is PostgreSQL's upsert syntax. If a row with the same chunk_id already exists, skip it silently. Same idempotent ingestion behavior as Level 1 but handled at the database level — more reliable than checking in Python first.
 
 def similarity_search(
     query_embedding: list[float],
@@ -151,16 +162,3 @@ def delete_source(source_name: str) -> int:
         return deleted
     finally:
         conn.close()
-
-
-# <=> operator in pgvector
-# ---------------------------
-# <=> is the cosine distance operator in pgvector. 1 - (embedding <=> query) converts distance to similarity — higher is better. Other operators:
-
-# <-> — L2 (Euclidean) distance (what ChromaDB used by default)
-# <#> — negative inner product
-# <=> — cosine distance ← we use this, best for text embeddings
-
-# ON CONFLICT (chunk_id) DO NOTHING
-# ------------------------------------
-# This is PostgreSQL's upsert syntax. If a row with the same chunk_id already exists, skip it silently. Same idempotent ingestion behavior as Level 1 but handled at the database level — more reliable than checking in Python first.
