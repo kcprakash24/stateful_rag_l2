@@ -2,10 +2,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
 from pathlib import Path
 
+# Absolute paths — work regardless of where app is launched from
 ENV_FILE = Path(__file__).parent.parent / ".env"
-
-# Absolute path to chroma_db — works regardless of where app is launched from
-CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
 
 
 class Settings(BaseSettings):
@@ -16,7 +14,7 @@ class Settings(BaseSettings):
     )
 
     # App
-    app_name: str = "DocMind"
+    app_name: str = "StatefulRAG"
     log_level: str = "INFO"
 
     # Ollama
@@ -25,13 +23,46 @@ class Settings(BaseSettings):
 
     # Embeddings
     embedding_model: str = "nomic-embed-text"
-
-    # ChromaDB — absolute path so it works from any working directory
-    chroma_persist_dir: str = str(CHROMA_DIR)
+    embedding_dim: int = 768
 
     # Chunking
     chunk_size: int = 1000
     chunk_overlap: int = 200
+
+    # PostgreSQL + pgvector
+    postgres_host: str = "localhost"
+    postgres_port: int = 5432
+    postgres_db: str = "docmind"
+    postgres_user: str = "docmind"
+    postgres_password: str = "docmind"
+
+    @property
+    def postgres_url(self) -> str:
+        return (
+            f"postgresql://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        )
+
+    @property
+    def postgres_async_url(self) -> str:
+        return (
+            f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        )
+
+    # Redis
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+    redis_ttl_seconds: int = 3600        # cache TTL — 1 hour
+    redis_similarity_threshold: float = 0.05  # cosine distance for cache hit
+
+    @property
+    def redis_url(self) -> str:
+        return f"redis://{self.redis_host}:{self.redis_port}"
+
+    # Memory
+    memory_last_n_messages: int = 6      # message pairs to keep in full
+    memory_summarize_after: int = 10     # pairs before triggering summarization
 
     # Langfuse
     langfuse_public_key: str = ""

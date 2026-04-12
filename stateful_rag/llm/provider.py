@@ -1,5 +1,5 @@
 from langchain_ollama import ChatOllama
-from config import get_settings
+from ..config import get_settings
 
 
 def get_llm() -> ChatOllama:

@@ -1,18 +1,28 @@
 from langchain_ollama import OllamaEmbeddings
-from config import get_settings
+from functools import lru_cache
+from stateful_rag.config import get_settings
 
 
+@lru_cache
 def get_embeddings() -> OllamaEmbeddings:
-    """
-    Returns the embedding model.
-    Always local via Ollama — never changes regardless of LLM provider setting.
-    
-    Returns:
-        LangChain-compatible embedding object
-    """
+    """Returns cached embedding model."""
     settings = get_settings()
-
     return OllamaEmbeddings(
-        model=settings.embedding_model,       # nomic-embed-text
-        base_url=settings.ollama_base_url,    # http://localhost:11434
+        model=settings.embedding_model,
+        base_url=settings.ollama_base_url,
     )
+
+
+def embed_texts(texts: list[str]) -> list[list[float]]:
+    """
+    Embed a list of texts.
+    Returns list of vectors in same order as input.
+    """
+    embedder = get_embeddings()
+    return embedder.embed_documents(texts)
+
+
+def embed_query(text: str) -> list[float]:
+    """Embed a single query string."""
+    embedder = get_embeddings()
+    return embedder.embed_query(text)

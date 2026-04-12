@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from ingestion.loader import ParsedDocument
+from stateful_rag.ingestion.loader import ParsedDocument
 
 
 @dataclass
