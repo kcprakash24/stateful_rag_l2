@@ -1,5 +1,5 @@
-# StatefulRAG — Level 2
-### Stateful Multi-User RAG with Memory, Caching & pgvector
+# StatefulRAG
+**Stateful Multi-User RAG with Memory, Caching & pgvector**
 
 Multi-turn RAG system where each user has isolated conversation memory, repeated questions are served from a semantic cache, and every LLM call is traced in Langfuse. Built on a LangGraph agent with PostgreSQL + pgvector for persistence.
 
