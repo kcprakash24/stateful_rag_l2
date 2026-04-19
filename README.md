@@ -169,7 +169,7 @@ docker compose ps  # both should show (healthy)
 ### 5. Create database schema
 
 ```bash
-docker exec -i stateful_rag_postgres psql -U docmind -d docmind << 'EOF'
+docker exec -i <container_name> psql -U <user_name> -d <user_name> << 'EOF'
 
 CREATE EXTENSION IF NOT EXISTS vector;
 
