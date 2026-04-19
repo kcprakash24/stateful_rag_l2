@@ -5,7 +5,9 @@ Multi-turn RAG system where each user has isolated conversation memory, repeated
 
 **Intent:** To move beyond "toy" RAG scripts and tackle the actual engineering hurdles of production-grade AI. This project is a deep dive into building a sophisticated, multi-tenant system that prioritizes state management (multi-user memory), performance optimization (semantic caching), and observability (Langfuse tracing). Essentially, it's about shifting from simple "input-output" loops to a robust, agentic architecture that can handle the complexities of real-world usage.
 
->**Tip:** You can refer the notebook for step by step understanding of the repo.
+
+>**NOTE:** You can refer the notebook for step by step understanding of the repo. <br>
+Extension of agentic_stateful_rag_L2 repository.
 
 ## What This Is
 
