@@ -7,7 +7,7 @@ Multi-turn RAG system where each user has isolated conversation memory, repeated
 
 
 >**NOTE:** You can refer the notebook for step by step understanding of the repo. <br>
-Extension of agentic_stateful_rag_L2 repository.
+Extension of `basic_rag_w_trace_L1` repository.
 
 ## What This Is
 
